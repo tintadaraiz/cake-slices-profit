@@ -1,0 +1,4 @@
+(executable
+ (public_name quatre_quarts)
+ (name main)
+ (libraries quatre_quarts))

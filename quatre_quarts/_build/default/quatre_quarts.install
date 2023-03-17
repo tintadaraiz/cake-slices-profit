@@ -1,0 +1,8 @@
+lib: [
+  "_build/install/default/lib/quatre_quarts/META"
+  "_build/install/default/lib/quatre_quarts/dune-package"
+  "_build/install/default/lib/quatre_quarts/opam"
+]
+bin: [
+  "_build/install/default/bin/quatre_quarts"
+]
