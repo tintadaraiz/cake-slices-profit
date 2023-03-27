@@ -8,17 +8,41 @@
 * uma primeira linha com o valor inteiro L, o lucro máximo que o pasteleiro consegue com a venda de um só bolo (inteiro) 
 * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *)
 
-(* linha com inteiro n *)
+(* linha com inteiro n -> número de fatias máximo *)
 let n = read_int()
 
-(* linha com o inteiro m *)
+(* linha com o inteiro m -> número de diferentes números de fatias *)
 let m = read_int()
 
- (* HashTable com o tamanho n*)
-let htbl = Hashtbl.create m
+(* lista *)
+    (* tamanho da lista *)
+    let rec length acc l =
+        match l with
+        | [] -> acc
+        | _ :: t -> length (acc + 1) t
 
+    (* função de leitura *)
+    let (val1, val2) = Scanf.scanf "%d %d" (fun a b -> (a,b))
+
+    let fatias = []
+    let rec listafatia num = 
+        match List.mem num fatias with
+        | true -> if length fatias < num then  
+
+    
+        
 (* ciclo para adicionar o nº de fatias + preço *)
-let rec adc m = 
+(*let rec adc m = 
     let (num1, num2) = Scanf.scanf "%d %d" (fun a b -> (a,b));
-    Hashtbl.add htbl (num1, num2)
+    Hashtbl.add htbl (num1, num2)*)
 
+(* input das fatias + preço para uma lista 
+let fatias = 
+    [1, 3;
+     2, 5;
+     3, 7;
+     4, 9;
+     5, 11;]*)
+
+(* output *)
+(* read_int |> *)
