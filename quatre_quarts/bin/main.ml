@@ -1,12 +1,12 @@
 (* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
-* ENTRADA *
-* uma linha com um inteiro n *
-* uma linha com o valor m que é o numero de tamanho de fatias considerado na tabela de preço *
-* as restantes m linhas contém dois inteiros i j(separados por um espaço). o inteiro i dá o tamanho da fatia e j é o seu preço*
-
-* SAÍDA *
-* uma primeira linha com o valor inteiro L, o lucro máximo que o pasteleiro consegue com a venda de um só bolo (inteiro) 
-* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *)
+ * ENTRADA                                                                                                                           *
+ * uma linha com um inteiro n                                                                                                        *
+ * uma linha com o valor m que é o numero de tamanho de fatias considerado na tabela de preço                                        *
+ * as restantes m linhas contém dois inteiros i j(separados por um espaço). o inteiro i dá o tamanho da fatia e j é o seu preço      *
+ *                                                                                                                                   *
+ * SAÍDA                                                                                                                             *
+ * uma primeira linha com o valor inteiro L, o lucro máximo que o pasteleiro consegue com a venda de um só bolo (inteiro)            *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *)
 
 (* linha com inteiro n -> número de fatias máximo *)
 let n = read_int()
@@ -15,19 +15,16 @@ let n = read_int()
 let m = read_int()
 
 (* lista *)
-    (* tamanho da lista *)
-    let rec length acc l =
-        match l with
-        | [] -> acc
-        | _ :: t -> length (acc + 1) t
-
     (* função de leitura *)
-    let (val1, val2) = Scanf.scanf "%d %d" (fun a b -> (a,b))
-
+    let (val1, val2) = Scanf.scanf "%d %d" (fun a b -> (a,b)) (* recebe dois inteiros separados por espaços e armazena-os num tuplo *)
+    (* recursividade para ler os valores *)
+    (* fazer uma função para adicionar tuplos a uma lista *)
+        
+            
     let fatias = []
     let rec listafatia num = 
         match List.mem num fatias with
-        | true -> if length fatias < num then  
+        | true -> if List.length fatias < num then  
 
     
         
