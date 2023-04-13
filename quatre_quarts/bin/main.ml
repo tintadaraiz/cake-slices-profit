@@ -15,16 +15,26 @@ let n = read_int()
 let m = read_int()
 
 (* lista *)
+    let fatias = []
+
+    (* numero maximo de diferentes fatias é o m, portanto é preciso uma funcao que faca apenas m vezes *)
+    let rec lista lst max =
+        if (List.length lst < max) then 
+            let (i,j) = Scanf.scanf "%d %d" (fun a b -> (a,b)) in 
+            match lst with
+            | [] -> [[i,j]]@lst
+            | [i,_]::_ -> failwith "erro, repeticao de valores"
+            | _::_ -> [[i,j]]@lst           
+        else    
+        
+    
     (* função de leitura *)
-    let (val1, val2) = Scanf.scanf "%d %d" (fun a b -> (a,b)) (* recebe dois inteiros separados por espaços e armazena-os num tuplo *)
+    (* recebe dois inteiros separados por espaços e armazena-os num tuplo *)
     (* recursividade para ler os valores *)
     (* fazer uma função para adicionar tuplos a uma lista *)
-        
+    
             
-    let fatias = []
-    let rec listafatia num = 
-        match List.mem num fatias with
-        | true -> if List.length fatias < num then  
+    
 
     
         
@@ -43,3 +53,10 @@ let fatias =
 
 (* output *)
 (* read_int |> *)
+
+(* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+ * INSPIRAÇOES                                                                                                                       *
+ * https://www.geeksforgeeks.org/0-1-knapsack-problem-dp-10/                                                                         *
+ * https://ocaml.org/docs/lists                                                                                                      *
+ * https://cs3110.github.io/textbook/chapters/data/lists.html                                                                        *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *)
