@@ -1,33 +1,59 @@
-let items = 
-  [ "beef", 3.8, 36;
-    "pork", 5.4, 43;
-    "ham", 3.6, 90;
-    "greaves", 2.4, 45;
-    "flitch", 4.0, 30;
-    "brawn", 2.5, 56;
-    "welt", 3.7, 67;
-    "salami", 3.0, 95;
-    "sausage", 5.9, 98;]
+(* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+ * ENTRADA                                                                                                                           *
+ * uma linha com um inteiro n                                                                                                        *
+ * uma linha com o valor m que é o numero de tamanho de fatias considerado na tabela de preço                                        *
+ * as restantes m linhas contém dois inteiros i j(separados por um espaço). o inteiro i dá o tamanho da fatia e j é o seu preço      *
+ *                                                                                                                                   *
+ * SAÍDA                                                                                                                             *
+ * uma primeira linha com o valor inteiro L, o lucro máximo que o pasteleiro consegue com a venda de um só bolo (inteiro)            *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *)
 
-let () = 
-  let items = List.map (fun (name, w, p) -> (name, w, p, float p /. w)) items in
-  let items = List.sort (fun (_,_,_,v1) (_,_,_,v2) -> compare v2 v1) items in
-  let rec loop acc weight = function
-  | ((_,w,_,_) as item) :: tl ->
-    if w +. weight > 15.0
-    then (weight, acc, item)
-    else loop (item:acc) (w +. weight) tl
-  | [] -> assert false
+(* linha com inteiro n -> número de fatias máximo *)
+(*let n = read_int()
+
+(* linha com o inteiro m -> número de diferentes números de fatias *)
+let m = read_int() *)
+
+(* lista *)
+let rec combinations n xs =
+  match n, xs with
+  | 0, _ -> [[]]
+  | _, [] -> []
+  | k, x :: xs' ->
+    let with_x = List.map (fun ys -> x :: ys) (combinations (k - 1) xs') in
+    let without_x = combinations k xs' in
+    with_x @ without_x
+
+let () =
+  let n = read_int () in
+  let m = read_int () in
+  let prices = Hashtbl.create m in
+  for _ = 1 to m do
+    let size, price = Scanf.scanf "%d %d\n" (fun x y -> x, y) in
+    Hashtbl.add prices size price
+  done;
+  let max_profit =
+    match Hashtbl.find_opt prices n with
+    | Some price -> price - 20
+    | None -> 0
   in
-  let weight, res, (last,w,p,v) = loop [] 0.0 items in
-  print_endline "   Items Weight Price";
-  let price = 
-    List.fold_left (fun price (name,w,p,_) ->
-      Printf.printf "  %7s: %6.2f %3\n" name w p;
-      (p + price)
-    ) 0 res
+  let slices = ref [] in
+  for i = 1 to n - 1 do
+    slices := !slices @ combinations i (List.init (n - 1) (fun j -> j + 1)) @ [[]]
+  done;
+  let rec max_profit' = function
+    | [] -> max_profit
+    | slice :: slices' ->
+      let profit = List.fold_left (fun acc size -> acc + Hashtbl.find prices size) 0 slice - 20 in
+      max_profit' slices' |> max profit
   in
-  let rem_weight = 15.0 -. weight in
-  let last_price = v *. rem_weight in 
-  Printf.printf " %7s: %6.2f %6.2f\n" last rem_weight last_price;
-  Printf.printf " Total Price: %.3f\n" (float price +. last_price); 
+  max_profit' !slices |> Printf.printf "%d\n"
+
+
+(* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+* INSPIRAÇOES                                                                                                                       *
+* https://www.geeksforgeeks.org/0-1-knapsack-problem-dp-10/                                                                         *
+* https://ocaml.org/docs/lists                                                                                                      *
+* https://cs3110.github.io/textbook/chapters/data/lists.html                                                                        *
+* https://rosettacode.org/wiki/Knapsack_problem/0-1                                                                                 *
+* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *)

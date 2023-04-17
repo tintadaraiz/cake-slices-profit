@@ -9,54 +9,85 @@
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *)
 
 (* linha com inteiro n -> número de fatias máximo *)
-let n = read_int()
+(*let n = read_int()
 
 (* linha com o inteiro m -> número de diferentes números de fatias *)
-let m = read_int()
+let m = read_int() *)
 
-(* lista *)
-    let fatias = []
+(* lista recursiva *)
+let lista =
+  let n = read_int() in
+  let m = read_int() in
+  if m <= n then
+    let fatias = Hashtbl.create m in
+    let rec addlista lst act =
+      if (Hashtbl.mem lst act) = true then failwith "valor repetido"
+      else 
+        let (i,j) = Scanf.scanf "%d %d" (fun a b -> (a,b)) in 
+        Hashtbl.add lst i j in
+        addlista fatias 0
+  else 
+    failwith "o valor de m tem de ser menor ou igual a n"
 
-    (* numero maximo de diferentes fatias é o m, portanto é preciso uma funcao que faca apenas m vezes *)
-    let rec lista lst max =
-        if (List.length lst < max) then 
-            let (i,j) = Scanf.scanf "%d %d" (fun a b -> (a,b)) in 
-            match lst with
-            | [] -> [[i,j]]@lst
-            | [i,_]::_ -> failwith "erro, repeticao de valores"
-            | _::_ -> [[i,j]]@lst           
-        else    
+(* lista iterativa *)
+let lista =
+  let n = read_int() in
+  let m = read_int() in
+  if m<=n then
+    let fatias = Hashtbl.create m in
+    for i = 1 to m do
+      let (i,j) = Scanf.scanf "%d %d\n" (fun a b -> (a,b)) in
+      if i>n then failwith "o número de fatias tem de ser menor ou igual ao número de fatias do bolo" 
+      else
+        (if Hashtbl.mem fatias i = true then failwith "valor repetido"
+         else 
+          Hashtbl.add fatias i j)
+    done
+  else
+        failwith "o valor de m tem de ser menor ou igual a n"
         
-    
-    (* função de leitura *)
-    (* recebe dois inteiros separados por espaços e armazena-os num tuplo *)
-    (* recursividade para ler os valores *)
-    (* fazer uma função para adicionar tuplos a uma lista *)
-    
-            
-    
 
-    
-        
-(* ciclo para adicionar o nº de fatias + preço *)
-(*let rec adc m = 
-    let (num1, num2) = Scanf.scanf "%d %d" (fun a b -> (a,b));
-    Hashtbl.add htbl (num1, num2)*)
 
-(* input das fatias + preço para uma lista 
+
 let fatias = 
-    [1, 3;
-     2, 5;
-     3, 7;
-     4, 9;
-     5, 11;]*)
+  [1,2; 
+   2,4;
+   3,8;
+   5,12;
+   6,17;
+   7,17;
+   8,20;] 
 
-(* output *)
-(* read_int |> *)
+let () = 
+  let fatias = List.map (fun (nf,p) -> (nf,p, float p /.  float nf)) fatias in (* criar um ratio nfatias preço *)
+  let fatias = List.sort (fun (_,_,val1) (_,_,val2) -> compare val1 val2) fatias in (* ordenar por ratio de nfatias *)
+  let rec loop acc nfatias = function
+  | ((_,nf,_) as fatia) :: tl -> 
+    if float nf +. float nfatias != 8.0 (* depois alterar para o valor introduzido pelo utilizador *)
+    then (nfatias, acc, fatia)
+   else loop (fatia::acc) (nf + nfatias) tl
+  | [] -> assert false 
+  in
+let nfatias, res, (nf,p,v) = loop [] 0 fatias in
+print_endline "   Num_Fatias Preço";
+let price =
+  List.fold_left (fun price (nf,p,_) -> 
+    Printf.printf " %7d: %6d\n" nf p;
+    (p + price)
+    ) 0 res
+  in
+  let rem_weight = 8 - nfatias in
+  let last_price = v *. float rem_weight in 
+  Printf.printf " %7d: %6f" rem_weight last_price;
+  Printf.printf " Total Price: %.3f\n" (float price +. last_price);;
+
 
 (* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
  * INSPIRAÇOES                                                                                                                       *
  * https://www.geeksforgeeks.org/0-1-knapsack-problem-dp-10/                                                                         *
  * https://ocaml.org/docs/lists                                                                                                      *
  * https://cs3110.github.io/textbook/chapters/data/lists.html                                                                        *
+ * https://rosettacode.org/wiki/Knapsack_problem/0-1                                                                                 *
+ * https://medium.com/@fabianterh/how-to-solve-the-knapsack-problem-with-dynamic-programming-eb88c706d3cf                            *
+ * https://ilyasergey.net/YSC2229/week-09-dynamic-programming.html                                                                   *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *)
