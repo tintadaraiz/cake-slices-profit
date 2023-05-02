@@ -1,10 +1,10 @@
-# dune build
+# dune exec quatre_quarts
 # OCAMLPARAM: unset
 # Shared cache: disabled
 # Workspace root:
 # /Users/rdsilva/Developer/ocaml/trabalhos/B/cake-slices-profit/quatre_quarts
 # Auto-detected concurrency: 8
-$ /Users/rdsilva/.opam/4.14.0/bin/ocamlc.opt -config > /var/folders/j0/0wxqgpbs2yd27wyqph2vgvjm0000gn/T/dune_f73b7b_output
+$ /Users/rdsilva/.opam/4.14.0/bin/ocamlc.opt -config > /var/folders/j0/0wxqgpbs2yd27wyqph2vgvjm0000gn/T/dune_a17994_output
 # Dune context:
 #  { name = "default"
 #  ; kind = "default"
@@ -111,13 +111,3 @@ $ /Users/rdsilva/.opam/4.14.0/bin/ocamlc.opt -config > /var/folders/j0/0wxqgpbs2
 #      ; windows_unicode = false
 #      }
 #  }
-$ (cd _build/default && /Users/rdsilva/.opam/4.14.0/bin/ocamlopt.opt -w @1..3@5..28@30..39@43@46..47@49..57@61..62@67@69-40 -strict-sequence -strict-formats -short-paths -keep-locs -g -I bin/.main.eobjs/byte -I bin/.main.eobjs/native -I lib/.quatre_quarts.objs/byte -I lib/.quatre_quarts.objs/native -intf-suffix .ml -no-alias-deps -opaque -o bin/.main.eobjs/native/dune__exe__Main.cmx -c -impl bin/main.ml)
-> File "bin/main.ml", line 23, characters 12-20:
-> 23 |     let rec addlista lst act =
->                  ^^^^^^^^
-> Error (warning 39 [unused-rec-flag]): unused rec flag.
-> File "bin/main.ml", line 18, characters 4-9:
-> 18 | let lista =
->          ^^^^^
-> Error (warning 32 [unused-value-declaration]): unused value lista.
-[2]

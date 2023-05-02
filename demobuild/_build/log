@@ -1,6 +1,0 @@
-# dune init proj demobuild
-# OCAMLPARAM: unset
-# Shared cache: disabled
-# Workspace root:
-# /Users/rdsilva/Developer/ocaml/trabalhos/B/cake-slices-profit/demobuild
-# Auto-detected concurrency: 8

@@ -8,30 +8,29 @@
  * uma primeira linha com o valor inteiro L, o lucro máximo que o pasteleiro consegue com a venda de um só bolo (inteiro)            *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *)
 
-(* linha com inteiro n -> número de fatias máximo *)
-(*let n = read_int()
+(* lista recursiva *)
+let quatre_quarts_price n m items =
+  let rec solver i j =
+    if i < 0 || j <= 0 then 0
+    else
+      let wn, pn = items.(i) in
+      if wn > j then solver (i - 1) j
+      else max (solver (i - 1) j) (pn + solver (i - 1) (j - wn))
+  in solver (m - 1) n
 
-(* linha com o inteiro m -> número de diferentes números de fatias *)
-let m = read_int() *)
+let () =
+  let n, m = Scanf.scanf "%d %d\n" (fun a b -> a, b) in
+  if (m <= 0 || m > 10000 || n <= 0 || n > 10000 || m > n) then
+    failwith "Os valores de M(número de fatias) e N(número de fatias a serem vendidas) devem estar no intervalo 0 < M <= 10000 , 0 < N <= 10000, e M <= N."
+  else
+    let items = Array.init m (fun _ ->
+      let slice, price = Scanf.scanf "%d %d\n" (fun a b -> a, b) in
+      if slice > n then failwith "Número de fatias excedido"
+      else (slice, price))
+    in
+    let max_price = quatre_quarts_price n m items in
+    print_string (string_of_int max_price ^ "\n")
 
-(* lista *)
-let lista =
-  let n = read_int() in
-  let m = read_int() in
-  if m <= n then
-    let fatias = Hashtbl.create m in
-    let rec addlista lst act =
-      if (Hashtbl.mem lst act) = true then failwith "valor repetido"
-      else 
-        let (i,j) = Scanf.scanf "%d %d" (fun a b -> (a,b)) in 
-        Hashtbl.add lst i j in
-        addlista fatias 0
-  else 
-    failwith "o valor de m tem de ser menor ou igual a n"
-
-
-
-  
 
 
 (* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
@@ -40,4 +39,6 @@ let lista =
  * https://ocaml.org/docs/lists                                                                                                      *
  * https://cs3110.github.io/textbook/chapters/data/lists.html                                                                        *
  * https://rosettacode.org/wiki/Knapsack_problem/0-1                                                                                 *
+ * https://medium.com/@fabianterh/how-to-solve-the-knapsack-problem-with-dynamic-programming-eb88c706d3cf                            *
+ * https://ilyasergey.net/YSC2229/week-09-dynamic-programming.html                                                                   *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *)
