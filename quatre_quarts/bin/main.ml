@@ -1,4 +1,10 @@
 (* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
+ * Trabalho realizado por:                                                                                                           *
+ * Rodrigo Silva (48069)                                                                                                             *
+ * Leonardo Santos (48990)                                                                                                           *
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *)
+
+(* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
  * ENTRADA                                                                                                                           *
  * uma linha com um inteiro n                                                                                                        *
  * uma linha com o valor m que é o numero de tamanho de fatias considerado na tabela de preço                                        *
@@ -7,35 +13,50 @@
  * SAÍDA                                                                                                                             *
  * uma primeira linha com o valor inteiro L, o lucro máximo que o pasteleiro consegue com a venda de um só bolo (inteiro)            *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *)
+(* funções auxiliares *)
+let nslice slices i =
+  let (s, _) = slices.(i) in s
 
-(* dynamic programming  *)
-let validar_input n m =
-  if m <= 0 || m > 10000 || n <= 0 || n > 10000 || m > n then
-    failwith "Os valores de M(número de fatias) e N(número de fatias a serem vendidas) devem estar no intervalo 0 < M <= 10000 , 0 < N <= 10000, e M <= N."
+let price slices i =
+  let ( _, p) = slices.(i) in p
 
-let quatre_quarts_price n m slices =
-  let memo = Array.make_matrix (m+1) (n+1) 0 in
-  for i = 1 to m do
-    let fatia, preco = slices.(i-1) in
-    for j = 1 to n do
-      if fatia > j then memo.(i).(j) <- memo.(i-1).(j)
-      else memo.(i).(j) <- max (memo.(i-1).(j)) (preco + memo.(i-1).(j-fatia))
+let quatre_quarts_price n slices =
+  let num_slices = Array.length slices in 
+    let m = Array.make (num_slices + 1) [||] in (* criação do array *)
+    for i = 0 to num_slices do
+      m.(i) <- Array.make (n + 1) 0
     done;
-  done;
-  memo.(m).(n)
 
+    (* operação principal *)
+    for i = 1 to num_slices do
+        for j = 1 to n do
+          if nslice slices (i - 1) <= j
+          then
+            let p = price slices (i - 1) in
+            m.(i).(j) <- max
+                (m.(i - 1).(j))
+                (m.(i).(j - nslice slices (i - 1)) + p) (* estávamos a  *)
+          else m.(i).(j) <- m.(i - 1).(j)
+        done
+    done;
+    (m.(num_slices).(n), m)
+
+(* criação do array + fornecimento dos valores *)
 let () =
   let n, m = Scanf.scanf "%d %d\n" (fun a b -> a, b) in
-  validar_input n m;
-  let slices = Array.init m (fun _ ->
-    let fatia, preco = Scanf.scanf "%d %d\n" (fun a b -> a, b) in
-    if fatia > n then failwith "Número de fatias excedido";
-    (fatia, preco))
+  if m <= 0 || m > 10000 || n <= 0 || n > 10000 || m > n then (* verifica se os valores de M e N estão dentro dos limites especificados *)
+    failwith "Os valores de m e n devem estar no intervalo 0 < m, n <= 10000, e m <= n."
+  else
+    let slices = Array.init m (fun _ -> (* lê os tamanhos das fatias e os seus preços *)
+      let slice_size, slice_price = Scanf.scanf "%d %d\n" (fun a b -> a, b) in
+      if slice_size > n then failwith "tamanho da fatia excedido"  (* verifica se o tamanho da fatia não é maior do que o tamanho do bolo *)
+      else (slice_size, slice_price))
+    in
+    let max_profit f = match f with (* pattern matching para selecionarmos apenas o primeiro elemento do tuplo *)
+    | (h,_) -> h
   in
-  let max_price = quatre_quarts_price n m slices in
-  print_string (string_of_int max_price ^ "\n");
-  print_endline("")
-
+    (quatre_quarts_price n slices |> max_profit |> print_int);
+    print_endline("")
 
 
 (* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * 
