@@ -13,12 +13,13 @@
  * SAÍDA                                                                                                                             *
  * uma primeira linha com o valor inteiro L, o lucro máximo que o pasteleiro consegue com a venda de um só bolo (inteiro)            *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *)
+
 (* funções auxiliares *)
 let nslice slices i =
-  let (s, _) = slices.(i) in s
+  let (s, _) = slices.(i) in s (* para selecionar apenas o número de fatias *)
 
 let price slices i =
-  let ( _, p) = slices.(i) in p
+  let ( _, p) = slices.(i) in p (* para selecionar apenas o preço do número de fatias *)
 
 let quatre_quarts_price n slices =
   let num_slices = Array.length slices in 
@@ -35,7 +36,7 @@ let quatre_quarts_price n slices =
             let p = price slices (i - 1) in
             m.(i).(j) <- max
                 (m.(i - 1).(j))
-                (m.(i).(j - nslice slices (i - 1)) + p) (* estávamos a  *)
+                (m.(i).(j - nslice slices (i - 1)) + p)
           else m.(i).(j) <- m.(i - 1).(j)
         done
     done;
