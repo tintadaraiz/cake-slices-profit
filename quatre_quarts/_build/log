@@ -1,10 +1,10 @@
-# dune exec quatre_quarts
+# dune build
 # OCAMLPARAM: unset
 # Shared cache: disabled
 # Workspace root:
 # /Users/rdsilva/Developer/ocaml/trabalhos/B/cake-slices-profit/quatre_quarts
 # Auto-detected concurrency: 8
-$ /Users/rdsilva/.opam/4.14.0/bin/ocamlc.opt -config > /var/folders/j0/0wxqgpbs2yd27wyqph2vgvjm0000gn/T/dune_c012dc_output
+$ /Users/rdsilva/.opam/4.14.0/bin/ocamlc.opt -config > /var/folders/j0/0wxqgpbs2yd27wyqph2vgvjm0000gn/T/dune_c20fd8_output
 # Dune context:
 #  { name = "default"
 #  ; kind = "default"
